@@ -1,8 +1,22 @@
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import { getToken } from "../services/LocalStorageService";
+import { useNavigate, NavLink } from "react-router-dom";
+
+import { getToken, removeToken } from "../services/LocalStorageService";
+import { useDispatch } from "react-redux";
+import { setUserInfo, unsetUserInfo } from "../features/userSlice";
+import { unsetUserToken } from "../features/authSlice";
 const Navbar = () => {
   const token = getToken("token");
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(unsetUserToken({ token: null }));
+    dispatch(unsetUserInfo({ name: "", email: "" }));
+    removeToken("token");
+    navigate("/login");
+  };
+
+  const dispatch = useDispatch();
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -33,15 +47,27 @@ const Navbar = () => {
             </Button>
 
             {token ? (
-              <Button
-                component={NavLink}
-                to="/dashboard"
-                style={({ isActive }) => {
-                  return { backgroundColor: isActive ? "#6d1b7b" : "" };
-                }}
-                sx={{ color: "white", textTransform: "none" }}>
-                Dashboard
-              </Button>
+              <>
+                <Button
+                  component={NavLink}
+                  to="/dashboard"
+                  style={({ isActive }) => {
+                    return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                  }}
+                  sx={{ color: "white", textTransform: "none" }}>
+                  Dashboard
+                </Button>
+                <Button
+                  component={NavLink}
+                  to="/login"
+                  onClick={handleLogout}
+                  style={({ isActive }) => {
+                    return { backgroundColor: isActive ? "#6d1b7b" : "Green" };
+                  }}
+                  sx={{ color: "white", textTransform: "none", ml: 10 }}>
+                  Logout
+                </Button>
+              </>
             ) : (
               <Button
                 component={NavLink}
