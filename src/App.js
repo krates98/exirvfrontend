@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import { useSelector } from "react-redux";
+import ProtectedLayout from "./pages/ProtectedLayout";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
@@ -29,14 +30,14 @@ function App() {
               path="api/user/reset/:id/:token"
               element={<ResetPassword />}
             />
-
+          </Route>
+          <Route path="/dashboard" element={<ProtectedLayout />}>
             <Route
               path="/dashboard"
               element={token ? <Dashboard /> : <Navigate to="/login" />}
             />
-
-            <Route path="*" element={<h1>Error 404 Page not found !!</h1>} />
           </Route>
+          <Route path="*" element={<h1>Error 404 Page not found !!</h1>} />
         </Routes>
       </BrowserRouter>
     </>
