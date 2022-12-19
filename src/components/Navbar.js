@@ -1,10 +1,12 @@
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
+
 import { useNavigate, NavLink } from "react-router-dom";
 
 import { getToken, removeToken } from "../services/LocalStorageService";
 import { useDispatch } from "react-redux";
-import { setUserInfo, unsetUserInfo } from "../features/userSlice";
+import { unsetUserInfo } from "../features/userSlice";
 import { unsetUserToken } from "../features/authSlice";
+
 const Navbar = () => {
   const token = getToken("token");
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const Navbar = () => {
         <AppBar position="static" color="secondary">
           <Toolbar>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-              Geek-Shop
+              Exirv
             </Typography>
 
             <Button
@@ -32,7 +34,7 @@ const Navbar = () => {
               style={({ isActive }) => {
                 return { backgroundColor: isActive ? "#6d1b7b" : "" };
               }}
-              sx={{ color: "white", textTransform: "none" }}>
+              sx={{ color: "white", textTransform: "none", ml: 1 }}>
               Home
             </Button>
 
@@ -42,7 +44,7 @@ const Navbar = () => {
               style={({ isActive }) => {
                 return { backgroundColor: isActive ? "#6d1b7b" : "" };
               }}
-              sx={{ color: "white", textTransform: "none" }}>
+              sx={{ color: "white", textTransform: "none", ml: 1 }}>
               Contact
             </Button>
 
@@ -54,7 +56,7 @@ const Navbar = () => {
                   style={({ isActive }) => {
                     return { backgroundColor: isActive ? "#6d1b7b" : "" };
                   }}
-                  sx={{ color: "white", textTransform: "none" }}>
+                  sx={{ color: "white", textTransform: "none", ml: 1 }}>
                   Dashboard
                 </Button>
                 <Button
@@ -62,7 +64,9 @@ const Navbar = () => {
                   to="/login"
                   onClick={handleLogout}
                   style={({ isActive }) => {
-                    return { backgroundColor: isActive ? "#6d1b7b" : "Green" };
+                    return {
+                      backgroundColor: isActive ? "#6d1b7b" : "green",
+                    };
                   }}
                   sx={{ color: "white", textTransform: "none", ml: 10 }}>
                   Logout
@@ -75,7 +79,7 @@ const Navbar = () => {
                 style={({ isActive }) => {
                   return { backgroundColor: isActive ? "#6d1b7b" : "" };
                 }}
-                sx={{ color: "white", textTransform: "none" }}>
+                sx={{ color: "white", textTransform: "none", ml: 1 }}>
                 Login/Registration
               </Button>
             )}

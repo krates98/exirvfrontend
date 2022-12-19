@@ -1,22 +1,16 @@
-import { Button, CssBaseline, Grid, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { getToken, removeToken } from "../services/LocalStorageService";
-import ChangePassword from "./auth/ChangePassword";
+import { CssBaseline, Grid } from "@mui/material";
+import { getToken } from "../services/LocalStorageService";
+// import ChangePassword from "./auth/ChangePassword";
 import { useGetLoggedUserQuery } from "../services/userAuthApi";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUserInfo, unsetUserInfo } from "../features/userSlice";
-import { unsetUserToken } from "../features/authSlice";
+import { setUserInfo } from "../features/userSlice";
+import axios from "axios";
+
+import Welcome from "./userPanel/Welcome";
+import CheckIp from "./userPanel/CheckIp";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(unsetUserToken({ token: null }));
-    dispatch(unsetUserInfo({ name: "", email: "" }));
-    removeToken("token");
-    navigate("/login");
-  };
-
   const token = getToken();
   const { data, isSuccess } = useGetLoggedUserQuery(token);
 
@@ -24,6 +18,17 @@ const Dashboard = () => {
     email: "",
     name: "",
   });
+
+  const [checkIpBut, setCheckIp] = useState(false);
+
+  const [ip, setIP] = useState("");
+  const [ipData, setIPdata] = useState("");
+
+  const getData = async () => {
+    const res = await axios.get("http://ip-api.com/json/");
+    setIP(res.data.query);
+    setIPdata(res.data);
+  };
 
   // Store User Data in Local State
   useEffect(() => {
@@ -46,38 +51,28 @@ const Dashboard = () => {
         })
       );
     }
-  }, [data, isSuccess, dispatch]);
+  }, [data, isSuccess, dispatch, getData]);
+
+  const checkIp = () => {
+    setCheckIp((setCheckIp) => !setCheckIp);
+    getData();
+  };
 
   return (
     <>
       <CssBaseline />
-      <Grid container>
-        <Grid
-          item
-          sm={12}
-          sx={{ backgroundColor: "#f5f5f5", p: 5, color: "white" }}>
-          <Typography variant="h5" color="black">
-            <h1>Dashboard</h1>
-          </Typography>
-
-          <Typography variant="h5" color="black">
-            Email: {userData.email}
-          </Typography>
-          <Typography variant="h6" color="black">
-            Name: {userData.name}
-          </Typography>
-          <Button
-            variant="contained"
-            color="warning"
-            size="large"
-            onClick={handleLogout}
-            sx={{ mt: 8 }}>
-            Logout
-          </Button>
-        </Grid>
-        {/* <Grid item sm={8}>
-        <ChangePassword />
-      </Grid> */}
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: "90vh" }}>
+        {!checkIpBut ? (
+          <Welcome userData={userData} checkIp={checkIp} />
+        ) : (
+          <CheckIp ip={ip} ipData={ipData} />
+        )}
       </Grid>
     </>
   );
