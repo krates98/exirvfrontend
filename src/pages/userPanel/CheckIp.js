@@ -1,11 +1,37 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Grid, Typography, ButtonGroup } from "@mui/material";
+import axios from "axios";
+
+import { getToken } from "../../services/LocalStorageService";
+import ShowData from "./ShowData";
 
 const CheckIp = (props) => {
+  const token = getToken();
+  const [toggleData, setToggleData] = useState(false);
+
   const [stateData, setStateData] = useState({});
 
-  return (
+  const fetchData = async () => {
+    setToggleData((setToggleData) => !setToggleData);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const usState = props.ipData.region;
+
+    const res = await axios.get(
+      `http://localhost:8000/api/fetchdata/${usState}`,
+      config
+    );
+
+    setStateData(res.data.user);
+  };
+
+  return !toggleData ? (
     <Grid
       item
       xs={12}
@@ -25,6 +51,7 @@ const CheckIp = (props) => {
       </ButtonGroup>
       <br />
       <Button
+        onClick={fetchData}
         variant="contained"
         color="success"
         aria-label="outlined button group"
@@ -32,6 +59,10 @@ const CheckIp = (props) => {
         size="large">
         Fetch Data
       </Button>
+    </Grid>
+  ) : (
+    <Grid>
+      <ShowData stateData={stateData} />
     </Grid>
   );
 };
