@@ -1,14 +1,15 @@
-import { CssBaseline, Grid } from "@mui/material";
+import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
+import theme from "./Theme";
 import { getToken } from "../services/LocalStorageService";
 // import ChangePassword from "./auth/ChangePassword";
 import { useGetLoggedUserQuery } from "../services/userAuthApi";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../features/userSlice";
-import axios from "axios";
+import { ipCall } from "../api/ApiCalls";
 
 import Welcome from "./userPanel/Welcome";
-import CheckIp from "./userPanel/CheckIp";
+import CheckIp from "./userPanel/FetchData";
 
 const Dashboard = () => {
   const token = getToken();
@@ -25,7 +26,7 @@ const Dashboard = () => {
   const [ipData, setIPdata] = useState("");
 
   const getData = async () => {
-    const res = await axios.get("http://ip-api.com/json/");
+    const res = await ipCall.get("");
     setIP(res.data.query);
     setIPdata(res.data);
   };
@@ -60,20 +61,22 @@ const Dashboard = () => {
 
   return (
     <>
-      <CssBaseline />
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: "90vh" }}>
-        {!checkIpBut ? (
-          <Welcome userData={userData} checkIp={checkIp} />
-        ) : (
-          <CheckIp ip={ip} ipData={ipData} />
-        )}
-      </Grid>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "90vh" }}>
+          {!checkIpBut ? (
+            <Welcome userData={userData} checkIp={checkIp} />
+          ) : (
+            <CheckIp ip={ip} ipData={ipData} />
+          )}
+        </Grid>
+      </ThemeProvider>
     </>
   );
 };
