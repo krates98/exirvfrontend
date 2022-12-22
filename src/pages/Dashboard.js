@@ -1,7 +1,6 @@
 import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
 import theme from "./Theme";
 import { getToken } from "../services/LocalStorageService";
-// import ChangePassword from "./auth/ChangePassword";
 import { useGetLoggedUserQuery } from "../services/userAuthApi";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -25,12 +24,6 @@ const Dashboard = () => {
   const [ip, setIP] = useState("");
   const [ipData, setIPdata] = useState("");
 
-  const getData = async () => {
-    const res = await ipCall.get("");
-    setIP(res.data.query);
-    setIPdata(res.data);
-  };
-
   // Store User Data in Local State
   useEffect(() => {
     if (data && isSuccess) {
@@ -40,6 +33,12 @@ const Dashboard = () => {
       });
     }
   }, [data, isSuccess]);
+
+  useEffect(async () => {
+    const res = await ipCall.get("");
+    setIP(res.data.query);
+    setIPdata(res.data);
+  }, []);
 
   // Store User Data in Redux Store
   const dispatch = useDispatch();
@@ -52,11 +51,10 @@ const Dashboard = () => {
         })
       );
     }
-  }, [data, isSuccess, dispatch, getData]);
+  }, [data, isSuccess, dispatch]);
 
-  const checkIp = () => {
-    setCheckIp((setCheckIp) => !setCheckIp);
-    getData();
+  const checkIp = async () => {
+    setCheckIp((current) => !current);
   };
 
   return (
@@ -71,7 +69,7 @@ const Dashboard = () => {
           justifyContent="center"
           style={{ minHeight: "90vh" }}>
           {!checkIpBut ? (
-            <Welcome userData={userData} checkIp={checkIp} />
+            <Welcome ip={ip} userData={userData} checkIp={checkIp} />
           ) : (
             <CheckIp ip={ip} ipData={ipData} />
           )}

@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import ClipboardJS from "clipboard";
-import { Box, Typography, Button, Divider } from "@mui/material";
+import { Box, Typography, Button, Divider, Alert } from "@mui/material";
+import { NavLink } from "react-router-dom";
 import ShowExtraData from "./ShowExtraData";
-import { extraStateDataApi } from "../../api/ApiCalls";
+import { stateDataApi } from "../../api/ApiCalls";
 
 const ShowData = (props) => {
   const firstname = props.stateData.firstname;
@@ -23,11 +24,17 @@ const ShowData = (props) => {
 
   const [extraData, setExtraData] = useState({});
 
+  const [extraFetchinData, setExtraFetchinData] = useState(false);
+
   const fetchExtraData = async () => {
     setFetchExtra((setFetchExtra) => !setFetchExtra);
 
-    const res = await extraStateDataApi.get(`${state}`);
-    setExtraData(res.data.user);
+    const res = await stateDataApi.get(`${state}`);
+
+    if (res.data.user) {
+      setExtraFetchinData((current) => !current);
+      setExtraData(res.data.user);
+    }
   };
 
   new ClipboardJS(".btn");
@@ -153,22 +160,36 @@ const ShowData = (props) => {
             {email}
           </Button>
         </Typography>
+
+        {!fetchExtra ? (
+          <Button
+            onClick={fetchExtraData}
+            size="large"
+            variant="contained"
+            sx={{ mt: 5, ml: 16.5 }}
+            color="warning">
+            FETCH EXTRA DATA
+          </Button>
+        ) : extraFetchinData ? (
+          <Box>
+            <Divider sx={{ mt: 5 }} />
+            <ShowExtraData extraData={extraData} />
+          </Box>
+        ) : (
+          <Alert sx={{ mt: 5 }} severity="error">
+            Extra Data Not Found
+          </Alert>
+        )}
       </Box>
-      {!fetchExtra ? (
-        <Button
-          onClick={fetchExtraData}
-          size="large"
-          variant="contained"
-          sx={{ mt: 5, ml: 20 }}
-          color="error">
-          Fetch Extra Data
-        </Button>
-      ) : (
-        <Box>
-          <Divider sx={{ mt: 5 }} />
-          <ShowExtraData extraData={extraData} />
-        </Box>
-      )}
+      <Button
+        component={NavLink}
+        to="/login"
+        size="large"
+        variant="contained"
+        sx={{ mt: 5, ml: 20, mb: 5 }}
+        color="error">
+        START OVER
+      </Button>
     </>
   );
 };

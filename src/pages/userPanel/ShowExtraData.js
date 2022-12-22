@@ -1,7 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, Divider } from "@mui/material";
-
-import { NavLink } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material";
 
 const ShowExtraData = (props) => {
   const firstname = props.extraData.firstname;
@@ -139,15 +137,6 @@ const ShowExtraData = (props) => {
           </Button>
         </Typography>
       </Box>
-      <Button
-        component={NavLink}
-        to="/login"
-        size="large"
-        variant="contained"
-        sx={{ mt: 5, ml: 20, mb: 5 }}
-        color="error">
-        START OVER
-      </Button>
     </>
   );
 };
