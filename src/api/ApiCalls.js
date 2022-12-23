@@ -21,4 +21,8 @@ const userIp = axios.create({
   baseURL: "http://localhost:8000/api/userip/",
 });
 
-export { ipCall, stateDataApi, userIp };
+const adminApi = axios.create({
+  baseURL: "http://localhost:8000/api/admin/",
+});
+
+export { ipCall, stateDataApi, userIp, adminApi };

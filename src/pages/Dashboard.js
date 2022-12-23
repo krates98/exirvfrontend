@@ -1,4 +1,4 @@
-import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
+import { CssBaseline, Grid, ThemeProvider, Box } from "@mui/material";
 import theme from "./Theme";
 import { getToken } from "../services/LocalStorageService";
 import { useGetLoggedUserQuery } from "../services/userAuthApi";
@@ -7,8 +7,8 @@ import { useDispatch } from "react-redux";
 import { setUserInfo } from "../features/userSlice";
 import { ipCall } from "../api/ApiCalls";
 
-import Welcome from "./userPanel/Welcome";
-import CheckIp from "./userPanel/FetchData";
+import Welcome from "./showDataPanel/Welcome";
+import CheckIp from "./showDataPanel/FetchData";
 
 const Dashboard = () => {
   const token = getToken();
@@ -17,6 +17,8 @@ const Dashboard = () => {
   const [userData, setUserData] = useState({
     email: "",
     name: "",
+    isMod: "",
+    isAdmin: "",
   });
 
   const [checkIpBut, setCheckIp] = useState(false);
@@ -30,6 +32,8 @@ const Dashboard = () => {
       setUserData({
         email: data.user.email,
         name: data.user.name,
+        isMod: data.user.isMod,
+        isAdmin: data.user.isAdmin,
       });
     }
   }, [data, isSuccess]);
@@ -48,6 +52,8 @@ const Dashboard = () => {
         setUserInfo({
           email: data.user.email,
           name: data.user.name,
+          isMod: data.user.isMod,
+          isAdmin: data.user.isAdmin,
         })
       );
     }

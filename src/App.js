@@ -1,4 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+import { useSelector } from "react-redux";
 import LoginReg from "./pages/auth/LoginReg";
 import ResetPassword from "./pages/auth/ResetPassword";
 import SendPasswordResetEmail from "./pages/auth/SendPasswordResetEmail";
@@ -6,10 +8,12 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
-import { useSelector } from "react-redux";
+import Admin from "./pages/Admin";
+import DataLeft from "./pages/admin/DataLeft";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
+
   return (
     <>
       <BrowserRouter>
@@ -17,6 +21,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path="admin/dataleft" element={<DataLeft />} />
             <Route
               path="login"
               element={!token ? <LoginReg /> : <Navigate to="/dashboard" />}

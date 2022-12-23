@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Grid, Alert, Button } from "@mui/material";
+import { Grid, Alert, Button, Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import ShowData from "./ShowData";
 import IpCheck from "./IpCheck";
@@ -55,15 +55,17 @@ const CheckIp = (props) => {
       <Alert sx={{ mt: 5 }} severity="error">
         Data Not Found
       </Alert>
-      <Button
-        component={NavLink}
-        to="/login"
-        size="large"
-        variant="contained"
-        sx={{ mt: 3, ml: 0 }}
-        color="error">
-        START OVER
-      </Button>
+      <Box m={1} display="flex" justifyContent="center" alignItems="center">
+        <Button
+          component={NavLink}
+          to="/login"
+          size="large"
+          variant="contained"
+          sx={{ mt: 3 }}
+          color="error">
+          START OVER
+        </Button>
+      </Box>
     </>
   );
 };

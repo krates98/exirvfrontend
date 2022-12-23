@@ -38,7 +38,7 @@ const Registration = () => {
     ) {
       if (actualData.password === actualData.password_confirmation) {
         const res = await registerUser(actualData);
-        console.log(res);
+
         if (res.data.status === "success") {
           storeToken(res.data.token);
           navigate("/dashboard");

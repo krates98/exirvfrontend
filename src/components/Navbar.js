@@ -1,15 +1,19 @@
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
-
 import { useNavigate, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getToken, removeToken } from "../services/LocalStorageService";
-import { useDispatch } from "react-redux";
 import { unsetUserInfo } from "../features/userSlice";
 import { unsetUserToken } from "../features/authSlice";
 
 const Navbar = () => {
   const token = getToken("token");
   const navigate = useNavigate();
+
+  const myData = useSelector((state) => state.user);
+
+  const admin = myData.isAdmin;
+
   const handleLogout = () => {
     dispatch(unsetUserToken({ token: null }));
     dispatch(unsetUserInfo({ name: "", email: "" }));
@@ -27,7 +31,6 @@ const Navbar = () => {
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
               Exirv
             </Typography>
-
             <Button
               component={NavLink}
               to="/"
@@ -37,17 +40,27 @@ const Navbar = () => {
               sx={{ color: "white", textTransform: "none", ml: 1 }}>
               Home
             </Button>
-
-            <Button
-              component={NavLink}
-              to="/contact"
-              style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
-              }}
-              sx={{ color: "white", textTransform: "none", ml: 1 }}>
-              Contact
-            </Button>
-
+            {admin ? (
+              <Button
+                component={NavLink}
+                to="/admin"
+                style={({ isActive }) => {
+                  return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                }}
+                sx={{ color: "white", textTransform: "none", ml: 1 }}>
+                Admin
+              </Button>
+            ) : (
+              <Button
+                component={NavLink}
+                to="/contact"
+                style={({ isActive }) => {
+                  return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                }}
+                sx={{ color: "white", textTransform: "none", ml: 1 }}>
+                Moderate
+              </Button>
+            )}
             {token ? (
               <>
                 <Button
@@ -68,7 +81,7 @@ const Navbar = () => {
                       backgroundColor: isActive ? "#6d1b7b" : "green",
                     };
                   }}
-                  sx={{ color: "white", textTransform: "none", ml: 10 }}>
+                  sx={{ color: "white", textTransform: "none", ml: 2 }}>
                   Logout
                 </Button>
               </>
