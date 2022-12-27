@@ -1,8 +1,7 @@
 import { Grid, Button, Typography } from "@mui/material";
-import { useNavigate, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Admin = () => {
-  const navigate = useNavigate();
   return (
     <>
       <Grid container justifyContent="center">
@@ -102,6 +101,8 @@ const Admin = () => {
           <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
             OFFERS :
             <Button
+              component={NavLink}
+              to="/admin/addoffers"
               className="btn"
               sx={{ ml: 5 }}
               size="large"
@@ -109,6 +110,8 @@ const Admin = () => {
               Add Offers
             </Button>
             <Button
+              component={NavLink}
+              to="/admin/addadvertiser"
               className="btn"
               sx={{ ml: 5 }}
               size="large"
