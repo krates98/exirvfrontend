@@ -10,7 +10,7 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import Admin from "./pages/Admin";
 import DataLeft from "./pages/admin/DataLeft";
-import AddAdvertiser from "./pages/admin/AddAdvertiser";
+import AddAdvert from "./pages/admin/AddAdvertiser";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
@@ -24,7 +24,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="admin" element={<Admin />} />
             <Route path="admin/dataleft" element={<DataLeft />} />
-            <Route path="admin/addadvertiser" element={<AddAdvertiser />} />
+            <Route path="admin/addadvertiser" element={<AddAdvert />} />
             <Route
               path="login"
               element={!token ? <LoginReg /> : <Navigate to="/dashboard" />}

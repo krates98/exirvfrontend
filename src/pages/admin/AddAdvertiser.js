@@ -12,11 +12,13 @@ import {
   FormControl,
   Select,
   Alert,
+  FormGroup,
 } from "@mui/material";
 
 import { advertiserApi } from "../../api/ApiCalls";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
-const AddOffers = () => {
+const AddAdvert = () => {
   const [advertisers, setAdvertisers] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const [drop, setDrop] = useState("");
@@ -25,6 +27,7 @@ const AddOffers = () => {
     msg: "",
     type: "",
   });
+  const [field, setfield] = useState();
 
   const removeError = () =>
     setTimeout(() => {
@@ -52,24 +55,18 @@ const AddOffers = () => {
   const advertiserSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    console.log(data.get("networkname").length);
+
     const actualData = {
       networkname: data.get("networkname"),
       advertisername: data.get("advertisername"),
       networkusername: data.get("networkusername"),
     };
-    const res = await advertiserApi
-      .post("/add", actualData)
-      .catch(function (error) {
-        setError({
-          status: true,
-          msg: "Advertiser name should be unique.",
-          type: "error",
-        });
-      });
-    apiCall();
-    console.log(res.data);
 
-    if (res.data) {
+    const res = await advertiserApi.post("/add", actualData);
+
+    apiCall();
+    if (res.data.addAdvertiser) {
       setError({
         status: true,
         msg: "Advertiser Added",
@@ -79,9 +76,38 @@ const AddOffers = () => {
     } else {
       setError({
         status: true,
-        msg: "Network name should be unique.",
+        msg: "Advertiser name should be unique.",
         type: "error",
       });
+      removeError();
+    }
+  };
+
+  const deleteSubmit = async (e) => {
+    e.preventDefault();
+    const actualData = {
+      advertisername: drop,
+    };
+
+    setDrop("");
+
+    const res = await advertiserApi.post("/delete", actualData);
+
+    apiCall();
+    if (res.data.deleteAdvertiser) {
+      setError({
+        status: true,
+        msg: "Advertiser Deleted",
+        type: "error",
+      });
+      removeError();
+    } else {
+      setError({
+        status: false,
+        msg: "Something Went Wrong",
+        type: "error",
+      });
+      removeError();
     }
   };
 
@@ -114,20 +140,22 @@ const AddOffers = () => {
           <Divider />
           <TextField
             margin="normal"
+            required={true}
+            id="advertisername"
+            name="advertisername"
+            label="Advertiser Name"
+            inputProps={{ min: 0, max: 10 }}
+            sx={{ ml: 5 }}
+          />
+          <TextField
+            margin="normal"
             required
             id="networkname"
             name="networkname"
             label="Network Name"
             sx={{ ml: 5 }}
           />
-          <TextField
-            margin="normal"
-            required
-            id="advertisername"
-            name="advertisername"
-            label="Advertiser Name"
-            sx={{ ml: 5 }}
-          />
+
           <TextField
             margin="normal"
             required
@@ -161,44 +189,42 @@ const AddOffers = () => {
         direction="row"
         justifyContent="center"
         sx={{ mt: 3 }}
-        //   onSubmit={handleSubmit}>
         alignItems="center">
-        <Box
-          justifyContent="center"
-          alignItems="center"
-          sx={{ width: "100%", maxWidth: 1000, mt: 5 }}>
+        <Box sx={{ width: "100%", maxWidth: 1000, mt: 5 }}>
           <Typography variant="h5" sx={{ ml: 5 }} gutterBottom>
             Delete Advertiser
           </Typography>
           <Divider sx={{ width: "100%" }} />
+
           {loading ? (
             <>
-              <Box sx={{ ml: 5 }}>
-                <FormControl sx={{ minWidth: 200, mt: 5 }}>
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Advertiser Name
-                  </InputLabel>
-                  <Select
-                    value={drop}
-                    onChange={handleChange}
-                    autoWidth
-                    label="Advertiser Name">
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {listItems}
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box sx={{ width: "100%", maxWidth: 1000 }}>
-                <Button
-                  type="submit"
-                  size="large"
-                  color="error"
-                  variant="contained"
-                  sx={{ ml: 5, mt: 5 }}>
-                  DELETE ADVERTISER
-                </Button>
+              <Box sx={{ ml: 5 }} onSubmit={deleteSubmit}>
+                <form>
+                  <FormControl sx={{ minWidth: 200, mt: 5 }}>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      Advertiser Name
+                    </InputLabel>
+                    <Select
+                      value={drop}
+                      onChange={handleChange}
+                      autoWidth
+                      label="Advertiser Name">
+                      <MenuItem value="">
+                        <b>None</b>
+                      </MenuItem>
+                      {listItems}
+                    </Select>
+
+                    <Button
+                      type="submit"
+                      size="large"
+                      color="error"
+                      variant="contained"
+                      sx={{ mt: 5, mb: 10 }}>
+                      DELETE ADVERTISER
+                    </Button>
+                  </FormControl>
+                </form>
               </Box>
             </>
           ) : (
@@ -210,4 +236,4 @@ const AddOffers = () => {
   );
 };
 
-export default AddOffers;
+export default AddAdvert;
