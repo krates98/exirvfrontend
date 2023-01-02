@@ -17,7 +17,7 @@ import {
 
 import { advertiserApi } from "../../api/ApiCalls";
 
-const AddAdvert = () => {
+const AddOffers = () => {
   const [advertisers, setAdvertisers] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const [drop, setDrop] = useState("");
@@ -274,4 +274,4 @@ const AddAdvert = () => {
   );
 };
 
-export default AddAdvert;
+export default AddOffers;

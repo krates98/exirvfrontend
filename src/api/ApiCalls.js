@@ -25,8 +25,12 @@ const adminApi = axios.create({
   baseURL: "http://localhost:8000/api/admin/",
 });
 
+const attendanceApi = axios.create({
+  baseURL: "http://localhost:8000/api/user/attendance/",
+});
+
 const advertiserApi = axios.create({
   baseURL: "http://localhost:8000/api/advertiser/",
 });
 
-export { ipCall, stateDataApi, userIp, adminApi, advertiserApi };
+export { ipCall, stateDataApi, userIp, adminApi, advertiserApi, attendanceApi };

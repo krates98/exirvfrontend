@@ -11,6 +11,8 @@ const Admin = () => {
           <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
             USER WORK :
             <Button
+              component={NavLink}
+              to="/admin/todaywork"
               className="btn"
               sx={{ ml: 5 }}
               size="large"
@@ -18,20 +20,14 @@ const Admin = () => {
               Today Work
             </Button>
             <Button
+              component={NavLink}
+              to="/admin/yesterdayWork"
               className="btn"
               sx={{ ml: 2 }}
               size="large"
               color="secondary"
               variant="contained">
               Yesterday Work
-            </Button>
-            <Button
-              className="btn"
-              sx={{ ml: 2 }}
-              size="large"
-              color="success"
-              variant="contained">
-              Individual Work
             </Button>
           </Typography>
           <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
@@ -57,6 +53,8 @@ const Admin = () => {
           <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
             ATTENDANCE :
             <Button
+              component={NavLink}
+              to="/admin/attendancemonth"
               className="btn"
               sx={{ ml: 5 }}
               size="large"

@@ -5,18 +5,17 @@ import { DataGrid } from "@mui/x-data-grid";
 
 const DataLeft = () => {
   const [loading, setLoading] = useState(false);
-  const [dataLeft, setDataLeft] = useState({});
+  const [rows, setRows] = useState({});
 
   useEffect(async () => {
     const res = await adminApi.get("/dataleft");
-    setDataLeft(res.data);
+    setRows(res.data.obj);
     setLoading(true);
   }, []);
 
   // MUI TABLE
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.1 },
     { field: "state", headerName: "State", flex: 1 },
     { field: "count", headerName: "Count", flex: 1 },
   ];
@@ -24,8 +23,6 @@ const DataLeft = () => {
   // WORKING DATA LEFT
 
   if (loading) {
-    const rows = dataLeft.obj;
-
     return (
       <Grid
         container
@@ -36,14 +33,14 @@ const DataLeft = () => {
         <Box
           sx={{
             width: "75%",
-            height: 1000,
+            height: 520,
             mb: 10,
           }}>
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={52}
-            rowsPerPageOptions={[52]}
+            pageSize={10}
+            getRowId={(row) => row.id}
           />
         </Box>
       </Grid>

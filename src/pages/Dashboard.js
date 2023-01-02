@@ -15,6 +15,7 @@ const Dashboard = () => {
   const { data, isSuccess } = useGetLoggedUserQuery(token);
 
   const [userData, setUserData] = useState({
+    id: "",
     email: "",
     name: "",
     isMod: "",
@@ -30,6 +31,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (data && isSuccess) {
       setUserData({
+        id: data.user._id,
         email: data.user.email,
         name: data.user.name,
         isMod: data.user.isMod,
@@ -38,18 +40,15 @@ const Dashboard = () => {
     }
   }, [data, isSuccess]);
 
-  useEffect(async () => {
-    const res = await ipCall.get("");
-    setIP(res.data.query);
-    setIPdata(res.data);
-  }, []);
+  console.log(userData);
 
   // Store User Data in Redux Store
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect(async () => {
     if (data && isSuccess) {
       dispatch(
         setUserInfo({
+          id: data.user._id,
           email: data.user.email,
           name: data.user.name,
           isMod: data.user.isMod,
@@ -58,6 +57,12 @@ const Dashboard = () => {
       );
     }
   }, [data, isSuccess, dispatch]);
+
+  useEffect(async () => {
+    const res = await ipCall.get("");
+    setIP(res.data.query);
+    setIPdata(res.data);
+  }, []);
 
   const checkIp = async () => {
     setCheckIp((current) => !current);

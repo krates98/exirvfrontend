@@ -11,6 +11,10 @@ import Layout from "./pages/Layout";
 import Admin from "./pages/Admin";
 import DataLeft from "./pages/admin/DataLeft";
 import AddAdvert from "./pages/admin/AddAdvertiser";
+import TodayWork from "./pages/admin/TodayWork";
+import YesterdayWork from "./pages/admin/YesterdayWork";
+import AttendanceCMonth from "./pages/admin/AttendanceCMonth";
+import Attendance from "./pages/Attendance";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
@@ -25,6 +29,14 @@ function App() {
             <Route path="admin" element={<Admin />} />
             <Route path="admin/dataleft" element={<DataLeft />} />
             <Route path="admin/addadvertiser" element={<AddAdvert />} />
+            <Route path="admin/todaywork" element={<TodayWork />} />
+            <Route path="admin/yesterdaywork" element={<YesterdayWork />} />
+            <Route
+              path="admin/attendancemonth"
+              element={<AttendanceCMonth />}
+            />
+            <Route path="/attendance" element={<Attendance />} />
+
             <Route
               path="login"
               element={!token ? <LoginReg /> : <Navigate to="/dashboard" />}
@@ -37,7 +49,6 @@ function App() {
               path="api/user/reset/:id/:token"
               element={<ResetPassword />}
             />
-
             <Route
               path="/dashboard"
               element={token ? <Dashboard /> : <Navigate to="/login" />}

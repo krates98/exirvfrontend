@@ -1,18 +1,41 @@
-import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button, Modal } from "@mui/material";
+import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getToken, removeToken } from "../services/LocalStorageService";
 import { unsetUserInfo } from "../features/userSlice";
 import { unsetUserToken } from "../features/authSlice";
+import Attendance from "../pages/Attendance";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const token = getToken("token");
   const navigate = useNavigate();
 
-  const myData = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
 
-  const admin = myData.isAdmin;
+  const admin = userData.isAdmin;
+  const mod = userData.isMod;
+  const name = userData.name;
+  const id = userData.id;
+
+  // console.log(userData);
 
   const handleLogout = () => {
     dispatch(unsetUserToken({ token: null }));
@@ -20,8 +43,6 @@ const Navbar = () => {
     removeToken("token");
     navigate("/login");
   };
-
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -51,6 +72,9 @@ const Navbar = () => {
                 Admin
               </Button>
             ) : (
+              ""
+            )}
+            {mod ? (
               <Button
                 component={NavLink}
                 to="/contact"
@@ -60,6 +84,8 @@ const Navbar = () => {
                 sx={{ color: "white", textTransform: "none", ml: 1 }}>
                 Moderate
               </Button>
+            ) : (
+              ""
             )}
             {token ? (
               <>
@@ -71,6 +97,11 @@ const Navbar = () => {
                   }}
                   sx={{ color: "white", textTransform: "none", ml: 1 }}>
                   Dashboard
+                </Button>
+                <Button
+                  onClick={handleOpen}
+                  sx={{ color: "white", textTransform: "none", ml: 1 }}>
+                  Attendance
                 </Button>
                 <Button
                   component={NavLink}
@@ -99,6 +130,15 @@ const Navbar = () => {
           </Toolbar>
         </AppBar>
       </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <Attendance name={name} id={id} />
+        </Box>
+      </Modal>
     </>
   );
 };
