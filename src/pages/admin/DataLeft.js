@@ -7,10 +7,13 @@ const DataLeft = () => {
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState({});
 
-  useEffect(async () => {
-    const res = await adminApi.get("/dataleft");
-    setRows(res.data.obj);
-    setLoading(true);
+  useEffect(() => {
+    const getDataLeft = async () => {
+      const res = await adminApi.get("/dataleft");
+      setRows(res.data.obj);
+      setLoading(true);
+    };
+    getDataLeft();
   }, []);
 
   // MUI TABLE

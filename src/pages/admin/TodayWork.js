@@ -8,14 +8,17 @@ const TodayWork = () => {
   const [rows, setRows] = useState({});
   //   const [workers, setWorkers] = useState({});
 
-  useEffect(async () => {
-    const res = await adminApi.get("/todaywork");
-    setRows(res.data.todayWork);
+  useEffect(() => {
+    const getTodayWork = async () => {
+      const res = await adminApi.get("/todaywork");
+      setRows(res.data.todayWork);
 
-    // const req = await adminApi.get("/getusers");
-    // setWorkers(req.data);
+      // const req = await adminApi.get("/getusers");
+      // setWorkers(req.data);
 
-    setLoading(true);
+      setLoading(true);
+    };
+    getTodayWork();
   }, []);
 
   const columns = [

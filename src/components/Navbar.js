@@ -1,8 +1,9 @@
 import { AppBar, Box, Toolbar, Typography, Button, Modal } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { useGetLoggedUserQuery } from "../services/userAuthApi";
+import { setUserInfo } from "../features/userSlice";
 import { getToken, removeToken } from "../services/LocalStorageService";
 import { unsetUserInfo } from "../features/userSlice";
 import { unsetUserToken } from "../features/authSlice";
@@ -21,21 +22,59 @@ const style = {
 };
 
 const Navbar = () => {
-  const dispatch = useDispatch();
+  const token = getToken("token");
+  const { data, isSuccess } = useGetLoggedUserQuery(token);
+
+  const [userData, setUserData] = useState({
+    id: "",
+    email: "",
+    name: "",
+    isMod: "",
+    isAdmin: "",
+  });
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const token = getToken("token");
+
   const navigate = useNavigate();
 
-  const userData = useSelector((state) => state.user);
+  // Store User Data in Local State
+  useEffect(() => {
+    if (data && isSuccess) {
+      setUserData({
+        id: data.user._id,
+        email: data.user.email,
+        name: data.user.name,
+        isMod: data.user.isMod,
+        isAdmin: data.user.isAdmin,
+      });
+    }
+  }, [data, isSuccess]);
 
   const admin = userData.isAdmin;
   const mod = userData.isMod;
-  const name = userData.name;
   const id = userData.id;
+  const name = userData.name;
+  const email = userData.email;
 
-  // console.log(userData);
+  // Store User Data in Redux Store
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const navDispatch = async () => {
+      if (data && isSuccess) {
+        dispatch(
+          setUserInfo({
+            id: data.user._id,
+            email: data.user.email,
+            name: data.user.name,
+            isMod: data.user.isMod,
+            isAdmin: data.user.isAdmin,
+          })
+        );
+      }
+    };
+    navDispatch();
+  }, [data, isSuccess, dispatch]);
 
   const handleLogout = () => {
     dispatch(unsetUserToken({ token: null }));
@@ -136,7 +175,7 @@ const Navbar = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
-          <Attendance name={name} id={id} />
+          <Attendance name={name} id={id} email={email} />
         </Box>
       </Modal>
     </>

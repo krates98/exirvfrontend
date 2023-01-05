@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Grid, Typography, ButtonGroup } from "@mui/material";
-import Alert from "@mui/material/Alert";
 
 const IpCheck = (props) => {
   return (

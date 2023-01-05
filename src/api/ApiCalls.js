@@ -26,7 +26,7 @@ const adminApi = axios.create({
 });
 
 const attendanceApi = axios.create({
-  baseURL: "http://localhost:8000/api/user/attendance/",
+  baseURL: "http://localhost:8000/api/user/",
 });
 
 const advertiserApi = axios.create({
