@@ -62,6 +62,8 @@ const Admin = () => {
               Attendance
             </Button>
             <Button
+              component={NavLink}
+              to="/admin/attendancelmonth"
               className="btn"
               sx={{ ml: 2 }}
               size="large"

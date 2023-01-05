@@ -14,6 +14,7 @@ import AddAdvert from "./pages/admin/AddAdvertiser";
 import TodayWork from "./pages/admin/TodayWork";
 import YesterdayWork from "./pages/admin/YesterdayWork";
 import AttendanceCMonth from "./pages/admin/AttendanceCMonth";
+import AttendanceLMonth from "./pages/admin/AttendanceLastMonth";
 import Attendance from "./pages/Attendance";
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
             <Route
               path="admin/attendancemonth"
               element={<AttendanceCMonth />}
+            />
+            <Route
+              path="admin/attendancelmonth"
+              element={<AttendanceLMonth />}
             />
             <Route path="/attendance" element={<Attendance />} />
 
