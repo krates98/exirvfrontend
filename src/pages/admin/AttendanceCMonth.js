@@ -50,6 +50,7 @@ const AttendanceCMonth = () => {
             return (
               <>
                 {element.attendance.map((checkDate) => {
+                  console.log(checkDate.date);
                   return dates === checkDate.date ? (
                     <Button
                       color="success"

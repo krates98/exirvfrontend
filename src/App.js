@@ -16,6 +16,9 @@ import YesterdayWork from "./pages/admin/YesterdayWork";
 import AttendanceCMonth from "./pages/admin/AttendanceCMonth";
 import AttendanceLMonth from "./pages/admin/AttendanceLastMonth";
 import Attendance from "./pages/Attendance";
+import Salary from "./pages/admin/Salary";
+import GenerateSalary from "./pages/admin/GenerateSalary";
+import LastMonthSalary from "./pages/admin/LastMonthSalary";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
@@ -39,6 +42,12 @@ function App() {
             <Route
               path="admin/attendancelmonth"
               element={<AttendanceLMonth />}
+            />
+            <Route path="admin/salary" element={<Salary />} />
+            <Route path="/admin/generatesalary" element={<GenerateSalary />} />
+            <Route
+              path="/admin/lastmonthsalary"
+              element={<LastMonthSalary />}
             />
             <Route path="/attendance" element={<Attendance />} />
 

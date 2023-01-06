@@ -75,6 +75,8 @@ const Admin = () => {
           <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
             SALARY :
             <Button
+              component={NavLink}
+              to="/admin/salary"
               className="btn"
               sx={{ ml: 5 }}
               size="large"
@@ -82,6 +84,8 @@ const Admin = () => {
               Salary
             </Button>
             <Button
+              component={NavLink}
+              to="/admin/generatesalary"
               className="btn"
               sx={{ ml: 2 }}
               size="large"
@@ -90,6 +94,8 @@ const Admin = () => {
               Generate Salary
             </Button>
             <Button
+              component={NavLink}
+              to="/admin/lastmonthsalary"
               className="btn"
               sx={{ ml: 2 }}
               size="large"
