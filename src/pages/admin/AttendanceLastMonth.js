@@ -41,41 +41,43 @@ const AttendanceLMonth = () => {
   if (loading) {
     structuring = attendance.map((element) => {
       return (
-        <>
+        <span key={element.name}>
           <Typography
             variant="button"
             display="block"
-            sx={{ mt: 5 }}
+            color="secondary"
+            sx={{ mt: 3 }}
             key={element.name}>
             {/* {element.name[0].toUpperCase() + element.name.substring(1)} */}
             {element.name}
           </Typography>
-          {arr.map((dates) => {
+          {arr.map((date) => {
+            const matchingObject = element.attendance.find(
+              (item) => item.date === date
+            );
             return (
-              <>
-                {element.attendance.map((checkDate) => {
-                  return dates === checkDate.date ? (
-                    <Button
-                      color="success"
-                      variant="contained"
-                      sx={{ mr: 3, mt: 3 }}
-                      key={element._id}>
-                      {checkDate.date}
-                    </Button>
-                  ) : (
-                    <Button
-                      color="error"
-                      variant="contained"
-                      sx={{ mr: 3, mt: 3 }}
-                      key={dates}>
-                      {dates}
-                    </Button>
-                  );
-                })}
-              </>
+              <span key={date}>
+                {matchingObject ? (
+                  <Button
+                    color="success"
+                    variant="contained"
+                    sx={{ mr: 3, mt: 3 }}
+                    key={date}>
+                    {date}
+                  </Button>
+                ) : (
+                  <Button
+                    color="error"
+                    variant="contained"
+                    sx={{ mr: 3, mt: 3 }}
+                    key={date}>
+                    {date}
+                  </Button>
+                )}
+              </span>
             );
           })}
-        </>
+        </span>
       );
     });
   }

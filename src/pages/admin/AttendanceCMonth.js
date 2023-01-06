@@ -46,29 +46,29 @@ const AttendanceCMonth = () => {
             {/* {element.name[0].toUpperCase() + element.name.substring(1)} */}
             {element.name}
           </Typography>
-          {arr.map((dates) => {
+          {arr.map((date) => {
+            const matchingObject = element.attendance.find(
+              (item) => item.date === date
+            );
             return (
               <>
-                {element.attendance.map((checkDate) => {
-                  console.log(checkDate.date);
-                  return dates === checkDate.date ? (
-                    <Button
-                      color="success"
-                      variant="contained"
-                      sx={{ mr: 3, mt: 3 }}
-                      key={element._id + element.name}>
-                      {checkDate.date}
-                    </Button>
-                  ) : (
-                    <Button
-                      color="error"
-                      variant="contained"
-                      sx={{ mr: 3, mt: 3 }}
-                      key={dates + element.name}>
-                      {dates}
-                    </Button>
-                  );
-                })}
+                {matchingObject ? (
+                  <Button
+                    color="success"
+                    variant="contained"
+                    sx={{ mr: 3, mt: 3 }}
+                    key={date}>
+                    {date}
+                  </Button>
+                ) : (
+                  <Button
+                    color="error"
+                    variant="contained"
+                    sx={{ mr: 3, mt: 3 }}
+                    key={date}>
+                    {date}
+                  </Button>
+                )}
               </>
             );
           })}
