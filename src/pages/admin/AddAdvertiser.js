@@ -15,6 +15,8 @@ import {
   Snackbar,
 } from "@mui/material";
 
+import { DataGrid } from "@mui/x-data-grid";
+
 import { advertiserApi } from "../../api/ApiCalls";
 
 const AddAdvert = () => {
@@ -51,18 +53,21 @@ const AddAdvert = () => {
 
   const advertiserSubmit = async (e) => {
     e.preventDefault();
+
     const data = new FormData(e.currentTarget);
 
     const actualData = {
       networkname: data.get("networkname"),
       advertisername: data.get("advertisername"),
       networkusername: data.get("networkusername"),
+      paymentinfo: data.get("paymentinfo"),
     };
 
     if (
       actualData.networkname &&
       actualData.advertisername &&
-      actualData.networkusername !== null
+      actualData.networkusername &&
+      actualData.paymentinfo !== null
     ) {
       const res = await advertiserApi.post("/add", actualData);
 
@@ -99,6 +104,7 @@ const AddAdvert = () => {
         horizontal: "center",
       });
     }
+    e.target.reset();
   };
 
   const deleteSubmit = async (e) => {
@@ -154,6 +160,17 @@ const AddAdvert = () => {
       </MenuItem>
     );
   });
+
+  //MUI TABLE
+
+  const columns = [
+    { field: "networkname", headerName: "Network Name", flex: 1 },
+    { field: "advertisername", headerName: "Advertiser Name", flex: 1 },
+    { field: "username", headerName: "Network User Name", flex: 1 },
+    { field: "paymentinfo", headerName: "Payment Information", flex: 1 },
+  ];
+
+  const rows = advertisers;
 
   return (
     <>
@@ -211,6 +228,15 @@ const AddAdvert = () => {
             label="Network Username"
             sx={{ ml: 5 }}
           />
+
+          <TextField
+            margin="normal"
+            required
+            id="paymentinfo"
+            name="paymentinfo"
+            label="Payment Information"
+            sx={{ ml: 5 }}
+          />
           <Box sx={{ width: "100%", maxWidth: 1000 }}>
             <Button
               type="submit"
@@ -263,6 +289,26 @@ const AddAdvert = () => {
                     </Button>
                   </FormControl>
                 </form>
+              </Box>
+              <Box sx={{ width: "100%", maxWidth: 1000, mb: 3, ml: 5 }}>
+                <Typography variant="h5" gutterBottom>
+                  Advertiser Info
+                </Typography>
+                <Divider sx={{ width: "100%", mb: 5 }} />
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: 520,
+                    mb: 10,
+                  }}>
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={10}
+                    getRowId={(row) => row._id}
+                    rowsPerPageOptions={[5, 10, 20]}
+                  />
+                </Box>
               </Box>
             </>
           ) : (

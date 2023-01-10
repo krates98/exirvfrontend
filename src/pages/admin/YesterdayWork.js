@@ -6,7 +6,6 @@ import { DataGrid } from "@mui/x-data-grid";
 const YesterdayWork = () => {
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState({});
-  //   const [workers, setWorkers] = useState({});
 
   useEffect(() => {
     const getYesterdayWork = async () => {

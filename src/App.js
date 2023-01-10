@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import Admin from "./pages/Admin";
 import DataLeft from "./pages/admin/DataLeft";
+import AddOffers from "./pages/admin/AddOffers";
 import AddAdvert from "./pages/admin/AddAdvertiser";
 import TodayWork from "./pages/admin/TodayWork";
 import YesterdayWork from "./pages/admin/YesterdayWork";
@@ -32,6 +33,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="admin" element={<Admin />} />
             <Route path="admin/dataleft" element={<DataLeft />} />
+            <Route path="admin/addoffers" element={<AddOffers />} />
             <Route path="admin/addadvertiser" element={<AddAdvert />} />
             <Route path="admin/todaywork" element={<TodayWork />} />
             <Route path="admin/yesterdaywork" element={<YesterdayWork />} />
