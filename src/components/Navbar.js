@@ -8,6 +8,7 @@ import { getToken, removeToken } from "../services/LocalStorageService";
 import { unsetUserInfo } from "../features/userSlice";
 import { unsetUserToken } from "../features/authSlice";
 import Attendance from "../pages/Attendance";
+import ShowOffer from "../pages/showDataPanel/ShowOffer";
 
 const style = {
   position: "absolute",
@@ -35,6 +36,10 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [offer, setOffer] = useState(false);
+  const handleOffer = () => setOffer(true);
+  const handleCloseOffer = () => setOffer(false);
 
   const navigate = useNavigate();
 
@@ -138,6 +143,11 @@ const Navbar = () => {
                   Dashboard
                 </Button>
                 <Button
+                  onClick={handleOffer}
+                  sx={{ color: "white", textTransform: "none", ml: 1 }}>
+                  Offers
+                </Button>
+                <Button
                   onClick={handleOpen}
                   sx={{ color: "white", textTransform: "none", ml: 1 }}>
                   Attendance
@@ -176,6 +186,15 @@ const Navbar = () => {
         aria-describedby="modal-modal-description">
         <Box sx={style}>
           <Attendance name={name} id={id} email={email} />
+        </Box>
+      </Modal>
+      <Modal
+        open={offer}
+        onClose={handleCloseOffer}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <ShowOffer id={id} />
         </Box>
       </Modal>
     </>

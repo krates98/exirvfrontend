@@ -5,6 +5,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Switch from "@mui/material/Switch";
 
+import _ from "lodash";
+
 import {
   IconButton,
   Grid,
@@ -307,7 +309,7 @@ const AddOffers = () => {
 
   const listAdvertisers = advertisers.map((element) => {
     return (
-      <MenuItem value={element._id} key={element.advertisername}>
+      <MenuItem value={element._id} key={element._id}>
         {element.advertisername}
       </MenuItem>
     );
@@ -315,7 +317,7 @@ const AddOffers = () => {
 
   const listOffers = offers.map((element) => {
     return (
-      <MenuItem value={element._id} key={element.offername}>
+      <MenuItem key={element._id} value={element._id}>
         {element.offername}
       </MenuItem>
     );
@@ -323,7 +325,7 @@ const AddOffers = () => {
 
   const listUsers = worker.map((element) => {
     return (
-      <MenuItem value={element._id} key={element.name}>
+      <MenuItem key={element._id} value={element._id}>
         {element.name}
       </MenuItem>
     );
@@ -331,62 +333,63 @@ const AddOffers = () => {
 
   const showOffers = offers.map((element) => {
     return (
-      <List>
-        <React.Fragment key={element._id}>
-          <ListItemButton onClick={() => listClick(element._id)}>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
+      <List key={element._id}>
+        <ListItemButton onClick={() => listClick(element._id)}>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
 
-            <ListItemText
-              primary={
-                element.offername +
-                " - (" +
-                element.advertiser.advertisername +
-                ") - " +
-                element.advertiser.networkname
-              }
-            />
-            <IconButton
-              edge="start"
-              aria-label="delete"
-              onClick={handleDelete(element._id)}>
-              <DeleteIcon />
-            </IconButton>
+          <ListItemText
+            primary={
+              element.offername +
+              " - (" +
+              element.advertiser.advertisername +
+              ") - " +
+              element.advertiser.networkname
+            }
+          />
+          <IconButton
+            edge="start"
+            aria-label="delete"
+            onClick={handleDelete(element._id)}>
+            <DeleteIcon />
+          </IconButton>
 
-            <Switch
-              edge="end"
-              onClick={handleToggle(element._id, element.toggle)}
-              checked={element.toggle}
-            />
+          <Switch
+            edge="end"
+            onClick={handleToggle(element._id, element.toggle)}
+            checked={element.toggle}
+          />
 
-            {element._id === listOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={element._id === listOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {element.attachuser.map((child) => (
-                <>
-                  <ListItemButton key={child._id}>
-                    <ListItemText
-                      primary={child.offerurl}
-                      secondary={child.username}
-                    />
-                    <IconButton
-                      edge="start"
-                      aria-label="delete"
-                      onClick={handleInsideDelete(element._id, child._id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemButton>
-                </>
-              ))}
+          {element._id === listOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={element._id === listOpen} timeout="auto" unmountOnExit>
+          {element.attachuser.map((child) => (
+            <List key={child._id} component="div" disablePadding>
+              <ListItemButton>
+                <ListItemText
+                  primary={child.offerurl}
+                  secondary={child.username}
+                  primaryTypographyProps={{
+                    variant: "subtitle2",
+                    style: {
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    },
+                  }}
+                />
+                <IconButton
+                  edge="start"
+                  aria-label="delete"
+                  onClick={handleInsideDelete(element._id, child._id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemButton>
             </List>
-          </Collapse>
-        </React.Fragment>
+          ))}
+        </Collapse>
       </List>
-      // <MenuItem value={element._id} key={element.offername}>
-      //   {element.offername}
-      // </MenuItem>
     );
   });
 
@@ -437,9 +440,6 @@ const AddOffers = () => {
                 onChange={handleChange}
                 autoWidth
                 label="Advertiser Name">
-                <MenuItem value="">
-                  <b>None</b>
-                </MenuItem>
                 {listAdvertisers}
               </Select>
             </FormControl>
@@ -473,9 +473,6 @@ const AddOffers = () => {
                     onChange={handleOfferChange}
                     autoWidth
                     label="Advertiser Name">
-                    <MenuItem value="">
-                      <b>None</b>
-                    </MenuItem>
                     {listOffers}
                   </Select>
                 </FormControl>
@@ -496,9 +493,6 @@ const AddOffers = () => {
                     onChange={handleWorkerChange}
                     autoWidth
                     label="Worker Name">
-                    <MenuItem value="">
-                      <b>None</b>
-                    </MenuItem>
                     {listUsers}
                   </Select>
                 </FormControl>
