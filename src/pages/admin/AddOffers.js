@@ -90,7 +90,8 @@ const AddOffers = () => {
 
   // Toggle Offer On & Off
 
-  const handleToggle = (id, toggle) => async () => {
+  const handleToggle = (id, toggle) => async (event) => {
+    event.stopPropagation();
     const actualData = {
       id: id,
       toggle: toggle,

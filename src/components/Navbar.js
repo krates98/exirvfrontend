@@ -23,16 +23,7 @@ const style = {
 };
 
 const Navbar = () => {
-  const token = getToken("token");
-  const { data, isSuccess } = useGetLoggedUserQuery(token);
-
-  const [userData, setUserData] = useState({
-    id: "",
-    email: "",
-    name: "",
-    isMod: "",
-    isAdmin: "",
-  });
+  // State
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -41,7 +32,38 @@ const Navbar = () => {
   const handleOffer = () => setOffer(true);
   const handleCloseOffer = () => setOffer(false);
 
-  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    id: "",
+    email: "",
+    name: "",
+    isMod: "",
+    isAdmin: "",
+  });
+
+  // Get Logged In User
+
+  const token = getToken("token");
+
+  const { data, isSuccess } = useGetLoggedUserQuery(token);
+
+  // Store User Data in Redux Store
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const navDispatch = async () => {
+      if (data && isSuccess) {
+        dispatch(
+          setUserInfo({
+            id: data.user._id,
+            email: data.user.email,
+            name: data.user.name,
+            isMod: data.user.isMod,
+            isAdmin: data.user.isAdmin,
+          })
+        );
+      }
+    };
+    navDispatch();
+  }, [data, isSuccess, dispatch]);
 
   // Store User Data in Local State
   useEffect(() => {
@@ -62,24 +84,7 @@ const Navbar = () => {
   const name = userData.name;
   const email = userData.email;
 
-  // Store User Data in Redux Store
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const navDispatch = async () => {
-      if (data && isSuccess) {
-        dispatch(
-          setUserInfo({
-            id: data.user._id,
-            email: data.user.email,
-            name: data.user.name,
-            isMod: data.user.isMod,
-            isAdmin: data.user.isAdmin,
-          })
-        );
-      }
-    };
-    navDispatch();
-  }, [data, isSuccess, dispatch]);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(unsetUserToken({ token: null }));

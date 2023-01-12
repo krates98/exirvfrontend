@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import Admin from "./pages/Admin";
 import DataLeft from "./pages/admin/DataLeft";
+import UploadData from "./pages/admin/DataUpload";
 import AddOffers from "./pages/admin/AddOffers";
 import AddAdvert from "./pages/admin/AddAdvertiser";
 import TodayWork from "./pages/admin/TodayWork";
@@ -23,6 +24,9 @@ import LastMonthSalary from "./pages/admin/LastMonthSalary";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
+  const userData = useSelector((state) => state.user);
+
+  const isAdmin = userData.isAdmin;
 
   return (
     <>
@@ -31,27 +35,62 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="admin" element={<Admin />} />
-            <Route path="admin/dataleft" element={<DataLeft />} />
-            <Route path="admin/addoffers" element={<AddOffers />} />
-            <Route path="admin/addadvertiser" element={<AddAdvert />} />
-            <Route path="admin/todaywork" element={<TodayWork />} />
-            <Route path="admin/yesterdaywork" element={<YesterdayWork />} />
+            <Route
+              path="admin"
+              element={isAdmin ? <Admin /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="admin/dataleft"
+              element={isAdmin ? <DataLeft /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="admin/uploaddata"
+              element={isAdmin ? <UploadData /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="admin/addoffers"
+              element={isAdmin ? <AddOffers /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="admin/addadvertiser"
+              element={isAdmin ? <AddAdvert /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="admin/todaywork"
+              element={isAdmin ? <TodayWork /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="admin/yesterdaywork"
+              element={isAdmin ? <YesterdayWork /> : <Navigate to="/login" />}
+            />
             <Route
               path="admin/attendancemonth"
-              element={<AttendanceCMonth />}
+              element={
+                isAdmin ? <AttendanceCMonth /> : <Navigate to="/login" />
+              }
             />
             <Route
               path="admin/attendancelmonth"
-              element={<AttendanceLMonth />}
+              element={
+                isAdmin ? <AttendanceLMonth /> : <Navigate to="/login" />
+              }
             />
-            <Route path="admin/salary" element={<Salary />} />
-            <Route path="/admin/generatesalary" element={<GenerateSalary />} />
+            <Route
+              path="admin/salary"
+              element={isAdmin ? <Salary /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/admin/generatesalary"
+              element={isAdmin ? <GenerateSalary /> : <Navigate to="/login" />}
+            />
             <Route
               path="/admin/lastmonthsalary"
-              element={<LastMonthSalary />}
+              element={isAdmin ? <LastMonthSalary /> : <Navigate to="/login" />}
             />
-            <Route path="/attendance" element={<Attendance />} />
+            <Route
+              path="/attendance"
+              element={token ? <Attendance /> : <Navigate to="/login" />}
+            />
 
             <Route
               path="login"
