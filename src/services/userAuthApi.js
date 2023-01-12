@@ -4,7 +4,7 @@ export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://exirvbackend.herokuapp.com/api/user/",
-    mode: "cors",
+    mode: "no-cors",
   }),
 
   endpoints: (builder) => ({
