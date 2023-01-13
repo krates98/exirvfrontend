@@ -16,7 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     const checkIpCall = async () => {
       const res = await ipCall.get("");
-      setIP(res.data.query);
+      setIP(res.data.ip);
       setIPdata(res.data);
     };
     checkIpCall();
