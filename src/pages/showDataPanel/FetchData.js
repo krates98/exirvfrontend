@@ -19,7 +19,7 @@ const CheckIp = (props) => {
 
   const fetchData = async () => {
     const res = await stateDataApi
-      .get(`${props.ipData.region}`)
+      .get(`${props.ipData.region_code}`)
       .catch(function (error) {
         console.log(error);
       });
@@ -41,10 +41,10 @@ const CheckIp = (props) => {
       fetchinData={fetchinData}
       fetchData={fetchData}
       ip={props.ip}
-      region={props.ipData.region}
+      region={props.ipData.region_code}
       city={props.ipData.city}
       country={props.ipData.country}
-      regionName={props.ipData.regionName}
+      regionName={props.ipData.region}
     />
   ) : fetchinData ? (
     <Grid>
