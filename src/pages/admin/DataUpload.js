@@ -63,7 +63,7 @@ const DataUpload = () => {
       });
       setFileUpload(res.data);
     } catch (err) {
-      console.error(err);
+      console.error(err.response.data);
     } finally {
       setIsUploading(false);
     }
