@@ -28,7 +28,7 @@ const IpCheck = (props) => {
         aria-label="outlined button group"
         sx={{ mt: 5 }}
         size="large">
-        {props.regionName}
+        Continue
       </Button>
     </Grid>
   );
