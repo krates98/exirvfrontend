@@ -6,7 +6,7 @@ const token = getToken();
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const ipCall = axios.create({
-  baseURL: "https://ip-api.com/json/",
+  baseURL: "http://ip-api.com/json/",
 });
 
 // For common config
