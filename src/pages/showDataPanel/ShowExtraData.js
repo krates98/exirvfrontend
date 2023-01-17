@@ -53,43 +53,6 @@ const ShowExtraData = (props) => {
         </Typography>
 
         <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
-          Age / Date:
-          <Button
-            className="btn"
-            data-clipboard-text={props.randomDate2.age}
-            sx={{ ml: 5 }}
-            size="large"
-            color="success"
-            variant="contained">
-            {props.randomDate2.age}
-          </Button>
-          <Button
-            className="btn"
-            data-clipboard-text={randomDateArray[0]}
-            sx={{ ml: 2 }}
-            size="large"
-            variant="contained">
-            {randomDateArray[0]}
-          </Button>
-          <Button
-            className="btn"
-            data-clipboard-text={randomDateArray[1]}
-            sx={{ ml: 2 }}
-            size="large"
-            variant="contained">
-            {randomDateArray[1]}
-          </Button>
-          <Button
-            className="btn"
-            data-clipboard-text={randomDateArray[2]}
-            sx={{ ml: 2 }}
-            size="large"
-            variant="contained">
-            {randomDateArray[2]}
-          </Button>
-        </Typography>
-
-        <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
           Address:
           <Button
             className="btn"
@@ -164,6 +127,43 @@ const ShowExtraData = (props) => {
             size="large"
             variant="contained">
             {phone3}
+          </Button>
+        </Typography>
+
+        <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
+          Date / Age:
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[0]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[0]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[1]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[1]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[2]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[2]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={props.randomDate2.age}
+            sx={{ ml: 5 }}
+            size="large"
+            color="success"
+            variant="contained">
+            {props.randomDate2.age}
           </Button>
         </Typography>
 
