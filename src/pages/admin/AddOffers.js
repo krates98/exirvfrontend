@@ -5,8 +5,6 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Switch from "@mui/material/Switch";
 
-import _ from "lodash";
-
 import {
   IconButton,
   Grid,

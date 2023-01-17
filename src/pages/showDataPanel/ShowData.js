@@ -172,7 +172,7 @@ const ShowData = (props) => {
           </Button>
         ) : extraFetchinData ? (
           <Box>
-            <Divider sx={{ mt: 5 }} />
+            <Divider sx={{ mt: 5, mb: 5 }} />
             <ShowExtraData extraData={extraData} />
           </Box>
         ) : (

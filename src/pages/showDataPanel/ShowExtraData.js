@@ -17,6 +17,9 @@ const ShowExtraData = (props) => {
 
   return (
     <>
+      <Typography variant="h5" sx={{ mb: 4 }} color="secondary" gutterBottom>
+        Extra Data
+      </Typography>
       <Box>
         <Typography variant="h6" color="primary" gutterBottom>
           Name / Gender:

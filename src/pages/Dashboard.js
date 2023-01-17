@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { ipCall } from "../api/ApiCalls";
 import Welcome from "./showDataPanel/Welcome";
 import CheckIp from "./showDataPanel/FetchData";
-import ShowOffer from "./showDataPanel/ShowOffer";
 
 const Dashboard = () => {
   const [checkIpBut, setCheckIp] = useState(false);
