@@ -5,6 +5,7 @@ import { Box, Typography, Button, Divider, Alert } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import ShowExtraData from "./ShowExtraData";
 import { stateDataApi } from "../../api/ApiCalls";
+import moment from "moment";
 
 const ShowData = (props) => {
   const firstname = props.stateData.firstname;
@@ -39,6 +40,24 @@ const ShowData = (props) => {
 
   new ClipboardJS(".btn");
 
+  const dateGenerate = () => {
+    const start = "01011970";
+    const end = "01012004";
+    const startDate = moment(start, "DDMMYYYY");
+    const endDate = moment(end, "DDMMYYYY");
+    const randomTimestamp =
+      startDate.valueOf() +
+      Math.random() * (endDate.valueOf() - startDate.valueOf());
+    const randomDate = moment(randomTimestamp);
+    const age = moment().diff(randomDate, "years");
+    return { date: randomDate.format("DD/MM/YYYY"), age: age };
+  };
+
+  const randomDate = dateGenerate();
+  const randomDate2 = dateGenerate();
+
+  const randomDateArray = randomDate.date.split("/");
+
   return (
     <>
       <Box sx={{ width: "100%", mt: 5 }}>
@@ -68,6 +87,43 @@ const ShowData = (props) => {
             color="success"
             variant="contained">
             {gender}
+          </Button>
+        </Typography>
+
+        <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
+          Age / Date:
+          <Button
+            className="btn"
+            data-clipboard-text={randomDate.age}
+            sx={{ ml: 5 }}
+            size="large"
+            color="success"
+            variant="contained">
+            {randomDate.age}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[0]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[0]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[1]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[1]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[2]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[2]}
           </Button>
         </Typography>
 
@@ -173,7 +229,7 @@ const ShowData = (props) => {
         ) : extraFetchinData ? (
           <Box>
             <Divider sx={{ mt: 5, mb: 5 }} />
-            <ShowExtraData extraData={extraData} />
+            <ShowExtraData extraData={extraData} randomDate2={randomDate2} />
           </Box>
         ) : (
           <Alert sx={{ mt: 5 }} severity="error">

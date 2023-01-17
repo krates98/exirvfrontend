@@ -15,6 +15,8 @@ const ShowExtraData = (props) => {
   const phone2 = phone?.substring(3, 6);
   const phone3 = phone?.substring(6, 10);
 
+  const randomDateArray = props.randomDate2.date.split("/");
+
   return (
     <>
       <Typography variant="h5" sx={{ mb: 4 }} color="secondary" gutterBottom>
@@ -47,6 +49,43 @@ const ShowExtraData = (props) => {
             color="success"
             variant="contained">
             {gender}
+          </Button>
+        </Typography>
+
+        <Typography sx={{ mt: 5 }} variant="h6" color="primary" gutterBottom>
+          Age / Date:
+          <Button
+            className="btn"
+            data-clipboard-text={props.randomDate2.age}
+            sx={{ ml: 5 }}
+            size="large"
+            color="success"
+            variant="contained">
+            {props.randomDate2.age}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[0]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[0]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[1]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[1]}
+          </Button>
+          <Button
+            className="btn"
+            data-clipboard-text={randomDateArray[2]}
+            sx={{ ml: 2 }}
+            size="large"
+            variant="contained">
+            {randomDateArray[2]}
           </Button>
         </Typography>
 
