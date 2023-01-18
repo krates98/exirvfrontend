@@ -49,7 +49,7 @@ const Welcome = (props) => {
       ) : (
         <>
           <Alert sx={{ mt: 5 }} severity="error">
-            IP Already Used
+            IP Already Used {props.ip}
           </Alert>
           <Box m={1} display="flex" justifyContent="center" alignItems="center">
             <Button
