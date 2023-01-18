@@ -1,9 +1,7 @@
 import { AppBar, Box, Toolbar, Typography, Button, Modal } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useGetLoggedUserQuery } from "../services/userAuthApi";
-import { setUserInfo } from "../features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { getToken, removeToken } from "../services/LocalStorageService";
 import { unsetUserInfo } from "../features/userSlice";
 import { unsetUserToken } from "../features/authSlice";
@@ -32,51 +30,13 @@ const Navbar = () => {
   const handleOffer = () => setOffer(true);
   const handleCloseOffer = () => setOffer(false);
 
-  const [userData, setUserData] = useState({
-    id: "",
-    email: "",
-    name: "",
-    isMod: "",
-    isAdmin: "",
-  });
-
   // Get Logged In User
 
   const token = getToken("token");
 
-  const { data, isSuccess } = useGetLoggedUserQuery(token);
+  const userData = useSelector((state) => state.user);
 
   // Store User Data in Redux Store
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const navDispatch = async () => {
-      if (data && isSuccess) {
-        dispatch(
-          setUserInfo({
-            id: data.user._id,
-            email: data.user.email,
-            name: data.user.name,
-            isMod: data.user.isMod,
-            isAdmin: data.user.isAdmin,
-          })
-        );
-      }
-    };
-    navDispatch();
-  }, [data, isSuccess, dispatch]);
-
-  // Store User Data in Local State
-  useEffect(() => {
-    if (data && isSuccess) {
-      setUserData({
-        id: data.user._id,
-        email: data.user.email,
-        name: data.user.name,
-        isMod: data.user.isMod,
-        isAdmin: data.user.isAdmin,
-      });
-    }
-  }, [data, isSuccess]);
 
   const admin = userData.isAdmin;
   const mod = userData.isMod;
@@ -86,9 +46,13 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleLogout = () => {
     dispatch(unsetUserToken({ token: null }));
-    dispatch(unsetUserInfo({ name: "", email: "" }));
+    dispatch(
+      unsetUserInfo({ name: "", email: "", id: "", mod: "", admin: "" })
+    );
     removeToken("token");
     navigate("/login");
   };

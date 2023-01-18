@@ -7,12 +7,14 @@ import {
   FormControl,
   InputLabel,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { attendanceApi } from "../api/ApiCalls";
 
 const Attendance = (props) => {
   const [savedAttendance, setSavedAttendance] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const checkAttendance = async () => {
@@ -25,6 +27,7 @@ const Attendance = (props) => {
       } else {
         setSavedAttendance(false);
       }
+      setLoading(true);
     };
     checkAttendance();
   }, [props.id]);
@@ -49,7 +52,9 @@ const Attendance = (props) => {
       <Typography variant="h5" color="black">
         Mark Attendance
       </Typography>
-      {savedAttendance ? (
+      {!loading ? (
+        <CircularProgress sx={{ ml: 5, mt: 2 }} color="inherit" />
+      ) : savedAttendance ? (
         <FormControl sx={{ mt: 2 }} variant="filled">
           <InputLabel id="demo-simple-select-label">Status</InputLabel>
           <Select

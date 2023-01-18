@@ -1,12 +1,29 @@
 import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
 import theme from "./Theme";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
+import { useDispatch } from "react-redux";
+import { useGetLoggedUserQuery } from "../services/userAuthApi";
+import { setUserInfo } from "../features/userSlice";
+import { getToken } from "../services/LocalStorageService";
 import { ipCall } from "../api/ApiCalls";
 import Welcome from "./showDataPanel/Welcome";
 import CheckIp from "./showDataPanel/FetchData";
 
 const Dashboard = () => {
+  // Get Logged In User
+
+  const token = getToken("token");
+  const { data, isSuccess } = useGetLoggedUserQuery(token);
+
+  const [userData, setUserData] = useState({
+    id: "",
+    email: "",
+    name: "",
+    isMod: "",
+    isAdmin: "",
+  });
+
   const [checkIpBut, setCheckIp] = useState(false);
 
   const [ip, setIP] = useState("");
@@ -25,7 +42,33 @@ const Dashboard = () => {
     setCheckIp((current) => !current);
   };
 
-  const userData = useSelector((state) => state.user);
+  // Store User Data in Local State
+  useEffect(() => {
+    if (data && isSuccess) {
+      setUserData({
+        admin: data.user.isAdmin,
+        mod: data.user.isMod,
+        id: data.user._id,
+        email: data.user.email,
+        name: data.user.name,
+      });
+    }
+  }, [data, isSuccess]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (data && isSuccess) {
+      dispatch(
+        setUserInfo({
+          admin: data.user.isAdmin,
+          mod: data.user.isMod,
+          id: data.user._id,
+          email: data.user.email,
+          name: data.user.name,
+        })
+      );
+    }
+  }, [data, isSuccess, dispatch]);
 
   return (
     <>

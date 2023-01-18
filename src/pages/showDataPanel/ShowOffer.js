@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import {
   Grid,
@@ -21,16 +21,20 @@ const ShowOffer = (props) => {
   const [offerArray, setOfferArray] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const apiCall = async () => {
-    const id = props.id;
+  const id = props.id;
+
+  const apiCall = useCallback(async () => {
     const res = await advertiserApi.get("/fetchOffer/" + id);
     setOfferArray(res.data);
     setLoading(true);
-  };
+  }, [id]);
 
   useEffect(() => {
     apiCall();
-  }, []);
+    return () => {
+      //cancel any ongoing subscriptions or async tasks
+    };
+  }, [apiCall, id]);
 
   const handleClick = (url) => {
     navigator.clipboard
