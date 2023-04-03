@@ -14,23 +14,23 @@ const ipCall = axios.create({
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 const stateDataApi = axios.create({
-  baseURL: "http://backend.exirv.xyz/api/fetchdata/",
+  baseURL: "https://backend.exirv.xyz/api/fetchdata/",
 });
 
 const userIp = axios.create({
-  baseURL: "http://backend.exirv.xyz/api/userip/",
+  baseURL: "https://backend.exirv.xyz/api/userip/",
 });
 
 const adminApi = axios.create({
-  baseURL: "http://backend.exirv.xyz/api/admin/",
+  baseURL: "https://backend.exirv.xyz/api/admin/",
 });
 
 const attendanceApi = axios.create({
-  baseURL: "http://backend.exirv.xyz/api/user/",
+  baseURL: "https://backend.exirv.xyz/api/user/",
 });
 
 const advertiserApi = axios.create({
-  baseURL: "http://backend.exirv.xyz/api/advertiser/",
+  baseURL: "https://backend.exirv.xyz/api/advertiser/",
 });
 
 export { ipCall, stateDataApi, userIp, adminApi, advertiserApi, attendanceApi };

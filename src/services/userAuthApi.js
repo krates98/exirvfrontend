@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://backend.exirv.xyz/api/user/",
+    baseUrl: "https://backend.exirv.xyz/api/user/",
   }),
 
   endpoints: (builder) => ({
