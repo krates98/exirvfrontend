@@ -4,7 +4,6 @@ export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://backend.exirv.xyz/api/user/",
-    credentials: "include",
   }),
 
   endpoints: (builder) => ({
