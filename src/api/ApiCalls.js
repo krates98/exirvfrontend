@@ -33,4 +33,16 @@ const advertiserApi = axios.create({
   baseURL: "https://backend.exirv.xyz/api/advertiser/",
 });
 
-export { ipCall, stateDataApi, userIp, adminApi, advertiserApi, attendanceApi };
+const hitIps = axios.create({
+  baseURL: "https://backend.exirv.xyz/api/userip/hitroute",
+});
+
+export {
+  ipCall,
+  stateDataApi,
+  userIp,
+  adminApi,
+  advertiserApi,
+  attendanceApi,
+  hitIps,
+};

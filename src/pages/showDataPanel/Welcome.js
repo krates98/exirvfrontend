@@ -6,6 +6,7 @@ import { userIp } from "../../api/ApiCalls.js";
 
 const Welcome = (props) => {
   const [IpTest, setIpTest] = useState(true);
+  const [hitIp, setHitIp] = useState();
 
   const [ipAlert, setIpAlert] = useState(true);
 
@@ -31,7 +32,8 @@ const Welcome = (props) => {
             color="secondary"
             size="large"
             onClick={checkForIp}
-            sx={{ mt: 3 }}>
+            sx={{ mt: 3 }}
+          >
             CHECK IP
           </Button>
         </Box>
@@ -42,7 +44,8 @@ const Welcome = (props) => {
             color="success"
             size="large"
             onClick={props.checkIp}
-            sx={{ height: 40, mx: 12, mt: 3 }}>
+            sx={{ height: 40, mx: 12, mt: 3 }}
+          >
             CONTINUE
           </Button>
         </Box>
@@ -58,7 +61,8 @@ const Welcome = (props) => {
               size="large"
               variant="contained"
               sx={{ mt: 3 }}
-              color="error">
+              color="error"
+            >
               START OVER
             </Button>
           </Box>
