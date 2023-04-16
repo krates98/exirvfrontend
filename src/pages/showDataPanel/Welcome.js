@@ -1,13 +1,19 @@
 import React from "react";
-import { useState } from "react";
-import { Button, Grid, Typography, Alert, Box } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  Button,
+  Grid,
+  Typography,
+  Alert,
+  Box,
+  Divider,
+  CircularProgress,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { userIp } from "../../api/ApiCalls.js";
+import { userIp, hitIps } from "../../api/ApiCalls.js";
 
 const Welcome = (props) => {
   const [IpTest, setIpTest] = useState(true);
-  const [hitIp, setHitIp] = useState();
-
   const [ipAlert, setIpAlert] = useState(true);
 
   const checkForIp = async () => {
@@ -18,6 +24,26 @@ const Welcome = (props) => {
     }
   };
 
+  //Conversion Tracking
+  const [count, setCount] = useState(0);
+  const [loader, setLoader] = useState(false);
+
+  useEffect(() => {
+    if (count) {
+      setLoader(true);
+    }
+  }, [count]);
+
+  useEffect(() => {
+    const totalConversions = async () => {
+      const res = await hitIps.post();
+
+      setCount(res.data);
+    };
+
+    totalConversions();
+  }, []);
+
   return (
     <Grid alignItems="center" justifyContent="center">
       <Box m={1} display="flex" justifyContent="center" alignItems="center">
@@ -25,6 +51,7 @@ const Welcome = (props) => {
           Welcome {props.userData.name}
         </Typography>
       </Box>
+
       {IpTest ? (
         <Box m={1} display="flex" justifyContent="center" alignItems="center">
           <Button
@@ -68,6 +95,18 @@ const Welcome = (props) => {
           </Box>
         </>
       )}
+      <Divider sx={{ mt: 5 }} />
+      <Box
+        m={1}
+        display="flex"
+        sx={{ mt: 2 }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography variant="h6" color="black">
+          Total Hits: {loader ? count : <CircularProgress size={20} />}
+        </Typography>
+      </Box>
     </Grid>
   );
 };
