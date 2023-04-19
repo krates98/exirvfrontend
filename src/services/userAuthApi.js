@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://backend.exirv.xyz/api/user/",
+    baseUrl: "https://seashell-app-99ve3.ondigitalocean.app/api/user/",
     credentials: "include",
   }),
 

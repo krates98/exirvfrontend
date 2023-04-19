@@ -14,27 +14,27 @@ const ipCall = axios.create({
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 const stateDataApi = axios.create({
-  baseURL: "https://backend.exirv.xyz/api/fetchdata/",
+  baseURL: "https://seashell-app-99ve3.ondigitalocean.app/api/fetchdata/",
 });
 
 const userIp = axios.create({
-  baseURL: "https://backend.exirv.xyz/api/userip/",
+  baseURL: "https://seashell-app-99ve3.ondigitalocean.app/api/userip/",
 });
 
 const adminApi = axios.create({
-  baseURL: "https://backend.exirv.xyz/api/admin/",
+  baseURL: "https://seashell-app-99ve3.ondigitalocean.app/api/admin/",
 });
 
 const attendanceApi = axios.create({
-  baseURL: "https://backend.exirv.xyz/api/user/",
+  baseURL: "https://seashell-app-99ve3.ondigitalocean.app/api/user/",
 });
 
 const advertiserApi = axios.create({
-  baseURL: "https://backend.exirv.xyz/api/advertiser/",
+  baseURL: "https://seashell-app-99ve3.ondigitalocean.app/api/advertiser/",
 });
 
 const hitIps = axios.create({
-  baseURL: "https://backend.exirv.xyz/api/userip/hitroute",
+  baseURL: "https://seashell-app-99ve3.ondigitalocean.app/api/userip/hitroute",
 });
 
 export {
